@@ -3,6 +3,7 @@ import { View, Button, TextInput, StyleSheet, Text, Alert } from 'react-native';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('GettingStarted');
+  const [previousPage, setPreviousPage] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -10,7 +11,15 @@ const App = () => {
   const [signupPassword, setSignupPassword] = useState('');
 
   const handlePageChange = (page) => {
+    setPreviousPage(currentPage);
     setCurrentPage(page);
+  };
+
+  const gotoPreviousPage = () => {
+    console.log("Back Button Pressed");
+    if (previousPage) {
+      setCurrentPage(previousPage);
+    }
   };
 
   const handleFormSubmit = (page) => {
@@ -68,7 +77,14 @@ const App = () => {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Button title="Submit" onPress={() => handleFormSubmit('Signup')} />
+            <View style={styles.buttonContainer}>
+              <View style={styles.buttonWrapper}>
+                <Button title="Submit" onPress={() => handleFormSubmit('Signup')} />
+              </View>
+              <View style={styles.buttonWrapper}>
+                <Button title="Back" color="red" onPress={gotoPreviousPage} />
+              </View>
+            </View>
           </View>
         );
       case 'Login':
@@ -93,7 +109,16 @@ const App = () => {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Button title="Login" onPress={() => handleFormSubmit('Login')} />
+            <View style={styles.buttonContainer}>
+              <View style={styles.buttonWrapper}>
+                <Button title="Login" onPress={() => handleFormSubmit('Login')} />
+              </View>
+
+              <View style={styles.buttonWrapper}>
+                <Button title="Back" color="red" onPress={gotoPreviousPage} />
+              </View>
+              
+            </View>
           </View>
         );
       case 'Dashboard':
@@ -127,6 +152,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+  },
+  buttonWrapper: {
+    marginHorizontal: 5,
   },
   dashboardText: {
     fontSize: 24,
