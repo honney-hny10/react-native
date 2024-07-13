@@ -61,6 +61,7 @@ const App = () => {
       case 'Login':
         return (
           <View style={styles.container}>
+            <Text style={styles.loginText}>Log in to your account</Text>
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -125,6 +126,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   signupText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  loginText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
