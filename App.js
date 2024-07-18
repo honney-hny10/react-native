@@ -1,117 +1,127 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, TextInput, StyleSheet, Text, Alert, ActivityIndicator, FlatList, Image } from 'react-native';
+import { View, Button, TextInput, StyleSheet, Text, Alert, ActivityIndicator, FlatList, Image, ImageBackground, ScrollView, SectionList ,SafeAreaView, Switch } from 'react-native';
 
 //getting started
 const GettingStarted = ({ handlePageChange }) => (
-  <View style={styles.container}>
-    <Text style={styles.welcomeText}>Welcome to my Store!</Text>
-    <Button title="Get Started" onPress={() => handlePageChange('Signup')} />
-  </View>
+  <ImageBackground source={{uri: 'https://img.freepik.com/free-vector/white-background-with-yellow-hexagonal-pattern-shape_1017-53245.jpg?w=1380&t=st=1721217625~exp=1721218225~hmac=b555bba87d4d3a84fdca3bc816965579dfd8beaffac13da6d967af04ec25fd46'}} style={styles.background}>
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>Welcome to my Store!</Text>
+      <Button title="Get Started" onPress={() => handlePageChange('Signup')} />
+    </View>
+  </ImageBackground>
 );
 
 //signup
 const Signup = ({ handlePageChange, signupEmail, setSignupEmail, signupPassword, setSignupPassword, setUsername }) => (
-  <View style={styles.container}>
-    <Text style={styles.signupText}>Create an account</Text>
-    <TextInput
-      style={styles.input}
-      placeholder="Username"
-      onChangeText={setUsername}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Email"
-      value={signupEmail}
-      onChangeText={setSignupEmail}
-      autoCapitalize="none"
-      autoCorrect={false}
-      keyboardType="email-address"
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Password"
-      secureTextEntry
-      value={signupPassword}
-      onChangeText={setSignupPassword}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
-    <View style={styles.buttonContainer}>
-      <View style={styles.buttonWrapper}>
-        <Button title="Sign Up" onPress={() => handlePageChange('Login')} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Button title="Back" color="red" onPress={() => handlePageChange('GettingStarted')} />
+  <ImageBackground source={{uri: 'https://img.freepik.com/free-vector/white-background-with-yellow-hexagonal-pattern-shape_1017-53245.jpg?w=1380&t=st=1721217625~exp=1721218225~hmac=b555bba87d4d3a84fdca3bc816965579dfd8beaffac13da6d967af04ec25fd46'}} style={styles.background}>
+    <View style={styles.container}>
+      <Text style={styles.signupText}>Create an account</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={signupEmail}
+        onChangeText={setSignupEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={signupPassword}
+        onChangeText={setSignupPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonWrapper}>
+          <Button title="Sign Up" onPress={() => handlePageChange('Login')} />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button title="Back" color="red" onPress={() => handlePageChange('GettingStarted')} />
+        </View>
       </View>
     </View>
-  </View>
+  </ImageBackground>
 );
 
 //login
 const Login = ({ handlePageChange, email, setEmail, password, setPassword, signupEmail, signupPassword }) => (
-  <View style={styles.container}>
-    <Text style={styles.loginText}>Log in to your account</Text>
-    <TextInput
-      style={styles.input}
-      placeholder="Email"
-      value={email}
-      onChangeText={setEmail}
-      autoCapitalize="none"
-      autoCorrect={false}
-      keyboardType="email-address"
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Password"
-      secureTextEntry
-      value={password}
-      onChangeText={setPassword}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
-    <View style={styles.buttonContainer}>
-      <View style={styles.buttonWrapper}>
-        <Button title="Login" onPress={() => {
-          if (email === signupEmail && password === signupPassword) {
-            handlePageChange('Welcome');
-          } else {
-            Alert.alert('Error', 'Login and signup details do not match');
-          }
-        }} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Button title="Back" color="red" onPress={() => handlePageChange('GettingStarted')} />
+  <ImageBackground source={{uri: 'https://img.freepik.com/free-vector/white-background-with-yellow-hexagonal-pattern-shape_1017-53245.jpg?w=1380&t=st=1721217625~exp=1721218225~hmac=b555bba87d4d3a84fdca3bc816965579dfd8beaffac13da6d967af04ec25fd46'}} style={styles.background}>
+    <View style={styles.container}>
+      <Text style={styles.loginText}>Log in to your account</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonWrapper}>
+          <Button title="Login" onPress={() => {
+            if (email === signupEmail && password === signupPassword) {
+              handlePageChange('Welcome');
+            } else {
+              Alert.alert('Error', 'Login and signup details do not match');
+            }
+          }} />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button title="Back" color="red" onPress={() => handlePageChange('GettingStarted')} />
+        </View>
       </View>
     </View>
-  </View>
+  </ImageBackground>
 );
 
-//welcome
+//Welcome
 const Welcome = ({ handlePageChange, username }) => (
-  <View style={styles.container}>
-    <Text style={styles.welcomeText}>Welcome, {username}!</Text>
-    <View style={styles.buttonContainer}>
-      <View style={styles.buttonWrapper}>
-        <Button title="Go to Product Page" onPress={() => handlePageChange('Product')} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Button title="Log Out" onPress={() => handlePageChange('GettingStarted')} />
+  <ImageBackground source={{uri: 'https://img.freepik.com/free-vector/white-background-with-yellow-hexagonal-pattern-shape_1017-53245.jpg?w=1380&t=st=1721217625~exp=1721218225~hmac=b555bba87d4d3a84fdca3bc816965579dfd8beaffac13da6d967af04ec25fd46'}} style={styles.background}>
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>Welcome, {username}!</Text>
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonWrapper}>
+          <Button title="Product Page" onPress={() => handlePageChange('Product')} />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button title="Log Out" onPress={() => handlePageChange('GettingStarted')} />
+        </View>
       </View>
     </View>
-  </View>
+  </ImageBackground>
 );
 
 //product
 const Product = ({ username }) => {
   const [loading, setLoading] = useState(true);
   const [productData, setProductData] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
-      setProductData([
-        {
+      const products = [
+       {
           "id": 1,
           "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
           "price": 109.95,
@@ -327,50 +337,89 @@ const Product = ({ username }) => {
             "count": 130
           }
         },
-      ]);
+      ];
+
+      const sections = products.reduce((acc, product) => {
+        const section = acc.find(section => section.title === product.category);
+        if (section) {
+          section.data.push(product);
+        } else {
+          acc.push({ title: product.category, data: [product] });
+        }
+        return acc;
+      }, []);
+
+      setProductData(sections);
       setLoading(false);
     }, 2000);
   }, []);
 
+  const handleToggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const handleAddToFavorites = (product) => {
+    setFavorites([...favorites, product]);
+  };
+
+  const handleRemoveFromFavorites = (product) => {
+    setFavorites(favorites.filter(item => item.id !== product.id));
+  };
+
+  const backgroundStyle = isDarkMode ? styles.darkBackground : styles.lightBackground;
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, backgroundStyle]}>
       <Text style={styles.welcomeText}>Products for {username}</Text>
+      <Switch
+        value={isDarkMode}
+        onValueChange={handleToggleDarkMode}
+        style={styles.switch}
+      />
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <FlatList
-          data={productData}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={3}
+        <SectionList
+          sections={productData}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={styles.cardWrapper}>
               <ProductCard
                 title={item.title}
                 description={item.description}
                 price={item.price}
-                discount={item.discount}
                 image={item.image}
-              />
-            </View>
+                product={item}
+                onAddToFavorites={() => handleAddToFavorites(item)}
+                onRemoveFromFavorites={() => handleRemoveFromFavorites(item)}
+                isFavorite={favorites.some(fav => fav.id === item.id)}
+              />         
+            </View>    
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={styles.sectionHeader}>{title}</Text>
           )}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
-
 //product card
-const ProductCard = ({ title, description, price, discount, image }) => (
+const ProductCard = ({ title, description, price, image,onAddToFavorites,onRemoveFromFavorites, isFavorite}) => (
   <View style={styles.card}>
     <Image source={{ uri: image }} style={styles.image} />
     <Text style={styles.title}>{title}</Text>
     <Text style={styles.description}>{description}</Text>
-    <Text style={styles.price}>Price: Rs{price}</Text>
-    <Text style={styles.discount}>Discount: {discount}%</Text>
+    <Text style={styles.price}>Price: ${price}</Text>
+    {isFavorite ? (
+      <Button title="Remove from Favorites" onPress={onRemoveFromFavorites} />
+    ) : (
+      <Button title="Add to Favorites" onPress={onAddToFavorites} />
+    )}
   </View>
 );
 
-// main app
+//main
 const App = () => {
   const [currentPage, setCurrentPage] = useState('GettingStarted');
   const [email, setEmail] = useState('');
@@ -388,131 +437,138 @@ const App = () => {
       case 'GettingStarted':
         return <GettingStarted handlePageChange={handlePageChange} />;
       case 'Signup':
-        return (
-          <Signup
-            handlePageChange={handlePageChange}
-            signupEmail={signupEmail}
-            setSignupEmail={setSignupEmail}
-            signupPassword={signupPassword}
-            setSignupPassword={setSignupPassword}
-            setUsername={setUsername}
-          />
-        );
+        return <Signup
+          handlePageChange={handlePageChange}
+          signupEmail={signupEmail}
+          setSignupEmail={setSignupEmail}
+          signupPassword={signupPassword}
+          setSignupPassword={setSignupPassword}
+          setUsername={setUsername}
+        />;
       case 'Login':
-        return (
-          <Login
-            handlePageChange={handlePageChange}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            signupEmail={signupEmail}
-            signupPassword={signupPassword}
-          />
-        );
+        return <Login
+          handlePageChange={handlePageChange}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          signupEmail={signupEmail}
+          signupPassword={signupPassword}
+        />;
       case 'Welcome':
         return <Welcome handlePageChange={handlePageChange} username={username} />;
       case 'Product':
         return <Product username={username} />;
       default:
-        return null;
+        return <GettingStarted handlePageChange={handlePageChange} />;
     }
   };
 
-  return renderPage();
+  return (
+    <View style={styles.container}>
+      {renderPage()}
+    </View>
+  );
 };
 
+//styles
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f9f9f9',
+    padding: 16,
   },
   input: {
-    width: '80%',
     height: 40,
-    borderColor: '#ccc',
+    borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    fontSize: 16,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '80%',
-  },
-  buttonWrapper: {
-    marginHorizontal: 5,
+    marginBottom: 12,
+    width: '100%',
+    paddingHorizontal: 8,
   },
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
   signupText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
   loginText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
-  cardWrapper: {
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  buttonWrapper: {
     flex: 1,
-    alignItems: 'center',
-    margin: 10,
+    margin: 5,
   },
-
   card: {
     backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
+    padding: 16,
+    margin: 10,
+    borderRadius: 8,
+    alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
-    marginVertical: 10,
-    width: 450,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    marginBottom: 10,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 5,
   },
   description: {
-    fontSize: 16,
-    marginBottom: 8,
+    fontSize: 14,
+    marginBottom: 10,
   },
   price: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 8,
   },
-  discount: {
-    fontSize: 16,
-    color: 'red',
-    marginBottom: 5,
+  cardWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  image: {
-    width: '100%',
-    height: 300, 
-    marginBottom: 0,
+  lightBackground: {
+    backgroundColor: '#fff',
   },
-  bestseller: {
-    color: 'red',
-    fontSize: 14,
-    marginBottom: 5,
+  darkBackground: {
+    backgroundColor: '#686869',
   },
-  content: {
-    padding: 10,
+  switch: {
+    marginVertical: 10,
+  },
+  sectionList: {
+    marginTop: 10,
+  },
+  sectionHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    backgroundColor: '#f2f2f2',
+    padding: 8,
+    marginTop: 16,
   },
 });
+
 export default App;
