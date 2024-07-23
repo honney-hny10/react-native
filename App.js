@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useReducer } from 'react';
 import {
   SafeAreaView,
   View,
@@ -14,9 +14,12 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+//context
 const FavoritesContext = createContext();
 const CartContext = createContext();
 
@@ -39,15 +42,29 @@ const FavoritesProvider = ({ children }) => {
   );
 };
 
+
+//reducer part
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TO_CART':
+      return [...state, action.product];
+    case 'REMOVE_FROM_CART':
+      return state.filter((item) => item.id !== action.product.id);
+    default:
+      return state;
+  }
+};
+
+//cart provider
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, dispatch] = useReducer(cartReducer, []);
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    dispatch({ type: 'ADD_TO_CART', product });
   };
 
   const removeFromCart = (product) => {
-    setCart(cart.filter((item) => item.id !== product.id));
+    dispatch({ type: 'REMOVE_FROM_CART', product });
   };
 
   return (
@@ -61,7 +78,7 @@ const backgroundImage = {
   uri: 'https://img.freepik.com/free-vector/white-background-with-yellow-hexagonal-pattern-shape_1017-53245.jpg?w=1380&t=st=1721217625~exp=1721218225~hmac=b555bba87d4d3a84fdca3bc816965579dfd8beaffac13da6d967af04ec25fd46',
 };
 
-// screen
+//screen
 const GettingStarted = ({ navigation }) => (
   <ImageBackground source={backgroundImage} style={styles.background}>
     <View style={styles.container}>
@@ -74,7 +91,7 @@ const GettingStarted = ({ navigation }) => (
   </ImageBackground>
 );
 
-// signup
+//signup
 const Signup = ({ navigation }) => {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -120,7 +137,7 @@ const Signup = ({ navigation }) => {
   );
 };
 
-// login
+//login
 const Login = ({ navigation, route }) => {
   const { signupEmail, signupPassword, username } = route.params;
   const [email, setEmail] = useState('');
@@ -230,7 +247,7 @@ const FavoritesCard = ({
     <Text style={styles.productTitle}>{title}</Text>
     <Text style={styles.productDescription}>{description}</Text>
     <Text style={styles.productPrice}>${price}</Text>
-    <Button title="Remove" onPress={onRemoveFromFavorites} />
+    <Button title="Remove from Favorites" onPress={onRemoveFromFavorites} />
   </View>
 );
 
@@ -528,6 +545,7 @@ const Product = ({ navigation }) => {
             />
           )}
         />
+        <Button title="Logout" onPress={() => navigation.navigate('GettingStarted')} />
       </SafeAreaView>
     </ImageBackground>
   );
@@ -602,12 +620,13 @@ const Cart = ({ navigation }) => {
 };
 
 const Tab = createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const HomeTabs = ({ route }) => {
   const { username } = route.params;
 
   return (
-    <Tab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: 'white' }}>
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen
         name="Home"
         component={Welcome}
@@ -653,38 +672,90 @@ const HomeTabs = ({ route }) => {
   );
 };
 
+const DrawerNavigation = ({ route }) => {
+  const { username } = route.params;
+
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen
+        name="Home"
+        component={Welcome}
+        initialParams={{ username }}
+        options={{
+          drawerLabel: 'Home',
+          drawerIcon: ({ color }) => (
+            <Ionicons name="home" color={color} size={24} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Products"
+        component={Product}
+        options={{
+          drawerLabel: 'Products',
+          drawerIcon: ({ color }) => (
+            <Ionicons name="list" color={color} size={24} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{
+          drawerLabel: 'Favorites',
+          drawerIcon: ({ color }) => (
+            <Ionicons name="heart" color={color} size={24} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          drawerLabel: 'Cart',
+          drawerIcon: ({ color }) => (
+            <Ionicons name="cart" color={color} size={24} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <FavoritesProvider>
-      <CartProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="GettingStarted"
-              component={GettingStarted}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Signup"
-              component={Signup}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={HomeTabs}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CartProvider>
-    </FavoritesProvider>
+    <PaperProvider>
+      <FavoritesProvider>
+        <CartProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="GettingStarted"
+                component={GettingStarted}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Signup"
+                component={Signup}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={DrawerNavigation}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </CartProvider>
+      </FavoritesProvider>
+    </PaperProvider>
   );
 }
 
